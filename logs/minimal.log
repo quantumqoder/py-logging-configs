@@ -1,0 +1,5 @@
+2024-04-20 17:54:55+0530 - __main__ - 24 - INFO - This is info
+2024-04-20 17:54:55+0530 - __main__ - 25 - WARNING - This is warning
+2024-04-20 17:54:55+0530 - __main__ - 26 - ERROR - This is error
+2024-04-20 17:54:55+0530 - __main__ - 27 - CRITICAL - This is critical
+2024-04-20 17:54:55+0530 - __main__ - 28 - INFO - 

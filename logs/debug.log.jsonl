@@ -1,0 +1,3 @@
+{"at": "2024-04-20T12:24:55.470177+00:00", "level": "DEBUG", "logger": "__main__", "thread": "MainThread", "file": "use_case.py", "function": "main", "lineno": 23, "message": "This is debug", "foo": "bar"}
+{"at": "2024-04-20T12:24:55.470239+00:00", "level": "INFO", "logger": "__main__", "thread": "MainThread", "file": "use_case.py", "function": "main", "lineno": 24, "message": "This is info", "foo": "bar"}
+{"at": "2024-04-20T12:24:55.470329+00:00", "level": "INFO", "logger": "__main__", "thread": "MainThread", "file": "use_case.py", "function": "main", "lineno": 28, "message": "", "if message field is empty": "then MinimalJsonFormatter wont print it on terminal."}
