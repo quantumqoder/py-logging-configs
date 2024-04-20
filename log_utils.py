@@ -30,7 +30,7 @@ LOG_RECORD_BUILTIN_ATTRS: Set[str] = {
 }
 
 
-class CSEFormatter(logging.Formatter):
+class MinimalJsonFormatter(logging.Formatter):
     def __init__(self, fmt_keys: Optional[Dict[str, str]] = None) -> None:
         logging.Formatter.__init__(self)
         self.fmt_keys: Dict[str, str] = fmt_keys or {}

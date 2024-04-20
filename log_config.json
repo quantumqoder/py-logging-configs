@@ -25,8 +25,8 @@
 				"message": "message"
 			}
 		},
-		"cse_json": {
-			"()": "log_utils.CSEFormatter",
+		"minimal_json": {
+			"()": "log_utils.MinimalJsonFormatter",
 			"fmt_keys": {
 				"file": "filename",
 				"lineno": "lineno",
@@ -53,21 +53,21 @@
 			"show_path": true,
 			"enable_link_path": true,
 			"rich_tracebacks": true,
-			"formatter": "cse_json"
+			"formatter": "minimal_json"
 		},
 		"error_handler": {
 			"class": "logging.handlers.RotatingFileHandler",
 			"level": "WARNING",
 			"formatter": "json",
-			"filename": "./src/logs/error.log.jsonl",
+			"filename": "./logs/error.log.jsonl",
 			"maxBytes": 10000,
 			"backupCount": 3
 		},
-		"cse_handler": {
+		"file_handler": {
 			"class": "logging.handlers.RotatingFileHandler",
 			"level": "INFO",
 			"formatter": "detailed",
-			"filename": "./src/logs/cse.log",
+			"filename": "./logs/minimal.log",
 			"maxBytes": 10000,
 			"backupCount": 3
 		},
@@ -75,7 +75,7 @@
 			"class": "logging.handlers.RotatingFileHandler",
 			"level": "DEBUG",
 			"formatter": "json",
-			"filename": "./src/logs/debug.log.jsonl",
+			"filename": "./logs/debug.log.jsonl",
 			"filters": [
 				"debug"
 			]
@@ -88,20 +88,29 @@
 				"no_critical"
 			]
 		},
+		"stderr": {
+			"class": "logging.StreamHandler",
+			"formatter": "detailed",
+			"stream": "ext://sys.stderr",
+			"filters": [
+				"no_critical"
+			]
+		},
 		"queue_handler": {
 			"class": "logging.handlers.QueueHandler",
 			"respect_handler_level": true,
 			"handlers": [
 				"error_handler",
-				"cse_handler",
-				"debug_handler"
+				"file_handler",
+				"debug_handler",
+				"rich_handler"
 			]
 		}
 	},
 	"loggers": {
 		"root": {
 			"handlers": [
-				"rich_handler"
+				"queue_handler"
 			],
 			"level": "DEBUG"
 		}
