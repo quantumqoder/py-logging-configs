@@ -1,0 +1,109 @@
+{
+	"version": 1,
+	"disable_existing_loggers": false,
+	"formatters": {
+		"simple": {
+			"format": "%(levelname)s - %(message)s"
+		},
+		"verbose": {
+			"format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+		},
+		"detailed": {
+			"format": "%(asctime)s - %(name)s - %(lineno)d - %(levelname)s - %(message)s",
+			"datefmt": "%Y-%m-%d %H:%M:%S%z"
+		},
+		"json": {
+			"()": "log_utils.JSONFormatter",
+			"fmt_keys": {
+				"at": "timestamp",
+				"level": "levelname",
+				"logger": "name",
+				"thread": "threadName",
+				"file": "filename",
+				"function": "funcName",
+				"lineno": "lineno",
+				"message": "message"
+			}
+		},
+		"cse_json": {
+			"()": "log_utils.CSEFormatter",
+			"fmt_keys": {
+				"file": "filename",
+				"lineno": "lineno",
+				"function": "funcName"
+			}
+		}
+	},
+	"filters": {
+		"debug": {
+			"()": "log_utils.DebugFilter"
+		},
+		"no_critical": {
+			"()": "log_utils.NoCriticalFilter"
+		}
+	},
+	"handlers": {
+		"rich_handler": {
+			"class": "rich.logging.RichHandler",
+			"level": "DEBUG",
+			"show_time": true,
+			"omit_repeated_times": true,
+			"log_time_format": "%Y-%m-%d %H:%M:%S%z",
+			"show_level": true,
+			"show_path": true,
+			"enable_link_path": true,
+			"rich_tracebacks": true,
+			"formatter": "cse_json"
+		},
+		"error_handler": {
+			"class": "logging.handlers.RotatingFileHandler",
+			"level": "WARNING",
+			"formatter": "json",
+			"filename": "./src/logs/error.log.jsonl",
+			"maxBytes": 10000,
+			"backupCount": 3
+		},
+		"cse_handler": {
+			"class": "logging.handlers.RotatingFileHandler",
+			"level": "INFO",
+			"formatter": "detailed",
+			"filename": "./src/logs/cse.log",
+			"maxBytes": 10000,
+			"backupCount": 3
+		},
+		"debug_handler": {
+			"class": "logging.handlers.RotatingFileHandler",
+			"level": "DEBUG",
+			"formatter": "json",
+			"filename": "./src/logs/debug.log.jsonl",
+			"filters": [
+				"debug"
+			]
+		},
+		"stdout": {
+			"class": "logging.StreamHandler",
+			"formatter": "detailed",
+			"stream": "ext://sys.stdout",
+			"filters": [
+				"no_critical"
+			]
+		},
+		"queue_handler": {
+			"class": "logging.handlers.QueueHandler",
+			"respect_handler_level": true,
+			"handlers": [
+				"error_handler",
+				"cse_handler",
+				"debug_handler"
+			]
+		}
+	},
+	"loggers": {
+		"root": {
+			"handlers": [
+				"rich_handler"
+			],
+			"level": "DEBUG"
+		}
+	}
+}
